@@ -10,6 +10,13 @@ public class Student {
     private String firstname;
     private String lastname;
 
+//    //default constructor
+//    public Student() {              //parameter-less constructor ή no-arg constructor
+//        id = 0;
+//        firstname = null;
+//        lastname = null;
+//    }
+
     public int getId() {
         return id;
     }
