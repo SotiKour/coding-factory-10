@@ -6,5 +6,17 @@ public class Main {
         Student alice = new Student();          // Default Constructor
         Student bob = new Student();
         Student student = new Student();
+
+        alice.id = 1;
+        alice.firstname = "Alice";
+        alice.lastname = "W.";
+
+        bob.id = 2;
+        bob.firstname = "Bob";
+        bob.lastname = "J.";
+
+        student.id = 3;
+        student.firstname = "Student";
+        student.lastname = "K.";
     }
 }

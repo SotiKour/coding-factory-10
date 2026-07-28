@@ -6,7 +6,7 @@ package gr.aueb.cf.ch11;
  */
 
 public class Student {
-    int id;
-    String firstname;
-    String lastname;
+    public int id;
+    public String firstname;
+    public String lastname;
 }
