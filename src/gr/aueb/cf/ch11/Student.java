@@ -1,6 +1,7 @@
 package gr.aueb.cf.ch11;
 
 /**
+ * Java Bean - POJO (Plain Old Java Object)
  * Απλή data κλάση με τρία πεδία (fields)
  * Απλών και σύνθετων τύπων.
  */
@@ -10,12 +11,9 @@ public class Student {
     private String firstname;
     private String lastname;
 
-//    //default constructor
-//    public Student() {              //parameter-less constructor ή no-arg constructor
-//        id = 0;
-//        firstname = null;
-//        lastname = null;
-//    }
+    //default constructor
+    public Student() {              //parameter-less constructor ή no-arg constructor
+    }
 
     public int getId() {
         return id;
