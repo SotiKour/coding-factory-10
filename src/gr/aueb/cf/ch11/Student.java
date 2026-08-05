@@ -13,6 +13,14 @@ public class Student {
 
     //default constructor
     public Student() {              //parameter-less constructor ή no-arg constructor
+
+    }
+
+    // Overloaded Constructor
+    public Student(int id, String firstname, String lastname) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
     }
 
     public int getId() {
