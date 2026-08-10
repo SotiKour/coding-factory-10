@@ -5,11 +5,10 @@ package gr.aueb.cf.ch11.model;
  */
 
 public class Point {
-    private int x;
-    private int y;
+    private  int x;
+    private  int y;
 
     public Point(){
-
     }
 
     public Point(int x, int y) {
