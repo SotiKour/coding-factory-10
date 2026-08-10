@@ -81,6 +81,7 @@ public class Account {
         } catch (Exception e) {
             System.err.printf("Negative amount = %f is not allowed. \n%s\n", amount, e.getMessage());
             throw e;
+
         }
 
 
