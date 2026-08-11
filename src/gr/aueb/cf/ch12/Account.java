@@ -1,5 +1,7 @@
 package gr.aueb.cf.ch12;
 
+import java.util.Objects;
+
 public class Account {
     private long id;
     private String iban;
@@ -70,7 +72,14 @@ public class Account {
         this.balance = balance;
     }
 
+
     // Public API - Contract
+    /**
+     * Deposit a specifi amount of money into the account.
+     *
+     * @param amount        the amount of money to deposit.
+     * @throws Exception    if the amount is Negative.
+     */
     public void deposit(double amount) throws Exception {
         try {
             if (amount < 0) {
@@ -83,9 +92,43 @@ public class Account {
             throw e;
 
         }
+    }
 
-
-
+    /**
+     * Withdraw a specific amount of money from the account!
+     * @param amount            the amount of money to withdraw
+     * @param ssn               the SSN od the account holder
+     * @throws Exception        if the amount is negative, the balance is insufficient,
+     *                          or the SSn does not match.
+     */
+    public void withdraw(double amount, String ssn) throws Exception {
+        try {
+            if (amount < 0) throw new Exception("The Amount must not be negative!");
+            if (amount > balance) throw new Exception("The balance is not sufficient!");
+            if (!isSsnValid(ssn)) throw new Exception("The SSN does not much!");
+            balance -= amount;
+            //Audit trail: who, when, what, initial balance, resulting balance
+        } catch (Exception e){
+            System.err.printf("Withdrawal failed. \n%s\n", e.getMessage());
+            throw e;
+        }
 
     }
+
+    //Design pattern - Delegation
+
+    /**
+     * Get the account balance.
+     * @return  the account balance.
+     */
+    public double getAccountBalance() {
+        return getBalance();
+    }
+
+    private boolean isSsnValid(String ssn) {
+//      return this.ssn.equals(ssn);                // not null-safe
+        return Objects.equals(this.ssn, ssn);       // null-safe
+    }
+
+
 }
