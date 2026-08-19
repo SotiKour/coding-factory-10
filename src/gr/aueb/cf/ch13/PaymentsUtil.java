@@ -16,7 +16,6 @@ public class PaymentsUtil {
     public static BigDecimal round(BigDecimal value, int decimaPlaces) {
         if (value == null) return BigDecimal.ZERO;
         return value.setScale(decimaPlaces, RoundingMode.HALF_UP);
-
     }
 
     /**\
