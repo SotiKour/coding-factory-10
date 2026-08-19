@@ -6,8 +6,6 @@ public class Main {
         OnlyOneCodingFactory onlyOneCodingFactory = OnlyOneCodingFactory.getInstance();
         onlyOneCodingFactory.doSomething();
 
-
-
         // Καλούμε μια υπηρεσία της Utility class
         HelloUtil.sayHello();
     }
