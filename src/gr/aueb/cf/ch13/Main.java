@@ -6,6 +6,5 @@ public class Main {
 
         // Καλούμε μια υπηρεσία της Utility class
         HelloUtil.sayHello();
-        System.out.println("Hello Util");
     }
 }
