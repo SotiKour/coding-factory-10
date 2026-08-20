@@ -100,16 +100,22 @@ public class Account {
 
     /**
      * Withdraw a specific amount of money from the account!
-     * @param amount            the amount of money to withdraw
-     * @param ssn               the SSN od the account holder
-     * @throws Exception        if the amount is negative, the balance is insufficient,
-     *                          or the SSn does not match.
+     * @param amount
+     *              the amount of money to withdraw.
+     * @param ssn
+     *              the SSN od the account holder.
+     * @throws NegativeAmountException
+     *             if the amount is negative.
+     * @throws InsufficientBalanceException
+     *             if the balance is insufficient.
+     * @throws SsnNotValidException
+     *                          if the SSn does not match.
      */
     public void withdraw(double amount, String ssn)
             throws NegativeAmountException, InsufficientBalanceException, SsnNotValidException {
         try {
             if (amount < 0) throw new NegativeAmountException("The amount = " + amount + " must not be negative!");
-            if (amount > balance) throw new InsufficientBalanceException("The balance = " + " is not sufficient!");
+            if (amount > balance) throw new InsufficientBalanceException("The balance = " + balance + " is not sufficient!");
             if (!isSsnValid(ssn)) throw new SsnNotValidException("The SSN = " + ssn + " does not much!");
             balance -= amount;
             //Audit trail: who, when, what, initial balance, resulting balance
