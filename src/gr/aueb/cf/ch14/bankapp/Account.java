@@ -1,5 +1,6 @@
 package gr.aueb.cf.ch14.bankapp;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Account {
@@ -77,22 +78,25 @@ public class Account {
     /**
      * Deposit a specifi amount of money into the account.
      *
-     * @param amount        the amount of money to deposit.
-     * @throws Exception    if the amount is Negative.
+     * @param amount
+     *                      the amount of money to deposit.
+     * @throws NegativeAmountException
+     *                      if the amount is Negative.
      */
-    public void deposit(double amount) throws Exception {
+    public void deposit(double amount) throws NegativeAmountException {
         try {
             if (amount < 0) {
-                throw new Exception("The Amount must not be negative");
+                throw new NegativeAmountException("The amount cannot be negative");
             }
             balance += amount;
             //audit trail: who, when, what, initial balance, resulting balance
-        } catch (Exception e) {
+        } catch (NegativeAmountException e) {
             System.err.printf("Negative amount = %f is not allowed. \n%s\n", amount, e.getMessage());
             throw e;
 
         }
     }
+
 
     /**
      * Withdraw a specific amount of money from the account!
@@ -101,15 +105,16 @@ public class Account {
      * @throws Exception        if the amount is negative, the balance is insufficient,
      *                          or the SSn does not match.
      */
-    public void withdraw(double amount, String ssn) throws Exception {
+    public void withdraw(double amount, String ssn)
+            throws NegativeAmountException, InsufficientBalanceException, SsnNotValidException {
         try {
-            if (amount < 0) throw new Exception("The Amount must not be negative!");
-            if (amount > balance) throw new Exception("The balance is not sufficient!");
-            if (!isSsnValid(ssn)) throw new Exception("The SSN does not much!");
+            if (amount < 0) throw new NegativeAmountException("The amount = " + amount + " must not be negative!");
+            if (amount > balance) throw new InsufficientBalanceException("The balance = " + " is not sufficient!");
+            if (!isSsnValid(ssn)) throw new SsnNotValidException("The SSN = " + ssn + " does not much!");
             balance -= amount;
             //Audit trail: who, when, what, initial balance, resulting balance
-        } catch (Exception e){
-            System.err.printf("Withdrawal failed. \n%s\n", e.getMessage());
+        } catch (NegativeAmountException | InsufficientBalanceException | SsnNotValidException e){
+            System.err.printf(LocalDateTime.now() + "Withdrawal failed. \n%s\n", e.getMessage());         // logging
             throw e;
         }
 
