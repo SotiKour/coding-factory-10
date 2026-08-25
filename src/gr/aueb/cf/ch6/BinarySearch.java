@@ -20,8 +20,5 @@ public class BinarySearch {
         if (value > arr[mid]) return binarySearch(arr, value, mid + 1, high);
         else return binarySearch(arr, value, low, mid - 1);
 
-
-
-
     }
 }
