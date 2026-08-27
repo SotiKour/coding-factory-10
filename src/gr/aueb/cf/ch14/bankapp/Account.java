@@ -76,7 +76,7 @@ public class Account {
 
     // Public API - Contract
     /**
-     * Deposit a specifi amount of money into the account.
+     * Deposit a specific amount of money into the account.
      *
      * @param amount
      *                      the amount of money to deposit.
