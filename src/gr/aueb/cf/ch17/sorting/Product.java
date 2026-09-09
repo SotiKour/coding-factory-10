@@ -40,6 +40,12 @@ public class Product implements Comparable<Product> {
     }
 
     @Override
+    public String toString() {
+//        return String.format("%s: %f, %d", description, price, quantity);
+        return description + ": " + price + ", " + quantity;
+    }
+
+    @Override
     public int compareTo(Product o) {
        return this.description.compareTo(o.description);        // natural ordering
 //        if (this.quantity < o.quantity) {
