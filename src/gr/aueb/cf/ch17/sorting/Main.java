@@ -30,8 +30,5 @@ public class Main {
                 .thenComparing(Product::getPrice, Comparator.reverseOrder())
                 .thenComparing(Product::getDescription).reversed()
         );
-
-
-
     }
 }
