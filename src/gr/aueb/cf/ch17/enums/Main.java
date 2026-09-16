@@ -1,0 +1,15 @@
+package gr.aueb.cf.ch17.enums;
+
+public class Main {
+
+    public static void main(String[] args) {
+        UserRole userRole = UserRole.ADMIN;
+
+        String userRoleStr = userRole.name();       //AMDIN
+        UserRole userRole2 = UserRole.valueOf("ADMIN");
+
+        for (UserRole role : userRole.values()) {
+            System.out.println(role.ordinal() + " - " + role.name());
+        }
+    }
+}
