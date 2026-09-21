@@ -3,7 +3,9 @@ package gr.aueb.cf.ch18.bankapp.model;
 import java.math.BigDecimal;
 import java.util.Objects;
 
-//JAVA BEAN
+/**
+ * Model Entity
+ */
 public class Account {
     private String iban;
     private BigDecimal balance;
