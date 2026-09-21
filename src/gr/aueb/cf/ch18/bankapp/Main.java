@@ -27,7 +27,9 @@ public class Main {
                         balance = new BigDecimal(scanner.nextLine().trim());
 
                         //AccountReadOnlyDTO readOnlyDTO = accountController.createNewAccount(iban, balance);
-                        //
+
+                        System.out.println("\n Ο λογαριασμός δημιουργήθηκε ή ανανεώθηκε επιτυχώς");
+                        System.out.println("ΙΒΑΝ: " + readOnlyDTO.iban() + "Υπόλοιπο: " + readOnlyDTO.balance());
 
                     }
 
