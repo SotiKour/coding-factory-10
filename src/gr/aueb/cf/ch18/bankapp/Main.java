@@ -1,10 +1,14 @@
 package gr.aueb.cf.ch18.bankapp;
 
+import gr.aueb.cf.ch18.bankapp.controller.AccountController;
+import gr.aueb.cf.ch18.bankapp.dto.AccountReadOnlyDTO;
+
 import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class Main {
 
+    private final static AccountController accountController = new AccountController();
     private final static Scanner scanner = new Scanner(System.in);
 
 
@@ -16,36 +20,31 @@ public class Main {
 
         while (true) {
             printMenu();
-            option = scanner.nextLine().trim();                   // Με τηω trim δεν παίρνουμε κενά στην αρχή ή στο τέλος!
+            option = scanner.nextLine().trim();                   // Με τηv trim δεν παίρνουμε κενά στην αρχή ή στο τέλος!
 
             try {
                 switch (option) {
                     case "1" -> {
-                        System.out.println("Παρακαλώ εισάγεται το IBAN!");
+                        System.out.print("Παρακαλώ εισάγεται το IBAN: ");
                         iban = scanner.nextLine().trim();
-                        System.out.println("Παρακαλώ εισάγεται το αρχικό υπόλοιπο!");
+                        System.out.print("Παρακαλώ εισάγεται το αρχικό υπόλοιπο: ");
                         balance = new BigDecimal(scanner.nextLine().trim());
 
-                        //AccountReadOnlyDTO readOnlyDTO = accountController.createNewAccount(iban, balance);
+                        AccountReadOnlyDTO readOnlyDTO = accountController.createNewAccount(iban, balance);
 
                         System.out.println("\n Ο λογαριασμός δημιουργήθηκε ή ανανεώθηκε επιτυχώς");
-                        System.out.println("ΙΒΑΝ: " + readOnlyDTO.iban() + "Υπόλοιπο: " + readOnlyDTO.balance());
-
+                        System.out.println("ΙΒΑΝ: " + readOnlyDTO.iban() + ", Υπόλοιπο: " + readOnlyDTO.balance());
                     }
 
 
-
-
+                    default -> {
+                        System.out.println("\nΜε έγκυρη Επιλογή");
+                    }
                 }
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         }
-
-
-
-
-
     }
 
     private static void printMenu() {
@@ -60,7 +59,7 @@ public class Main {
         System.out.println("    4. Ανάληψη");
         System.out.println("    5. Ερώτηση υπολοίπου");
         System.out.println("[Qq]. Έξοδος");
-        System.out.print("\n Εισάγετε μία επιλογή");
+        System.out.print("\n Εισάγετε μία επιλογή: ");
     }
 
 
