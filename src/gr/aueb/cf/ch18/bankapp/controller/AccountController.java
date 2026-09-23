@@ -35,7 +35,7 @@ public class AccountController {
 
         //Dummy Data
         if (iban.equals("GR12345")) {
-            throw new IllegalArgumentException("Account with IBAN" + iban + " not exist");
+            throw new IllegalArgumentException("ο Λογαριασμός με IBAN: " + iban + " δεν υπάρχει!");
         }
 
         //Service Call
@@ -48,7 +48,7 @@ public class AccountController {
 
         //Dummy Data
         if (iban.equals("GR12345")) {
-            throw new IllegalArgumentException("Account with IBAN" + iban + " not exist");
+            throw new IllegalArgumentException("ο Λογαριασμός με IBAN: " + iban + " δεν υπάρχει!");
         }
 
         //Service Call
