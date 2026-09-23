@@ -32,7 +32,9 @@ public class AccountDAOImpl implements IAccountDAO{
 
     @Override
     public Optional<Account> findByIban(String iban) {
-        return Optional.empty();
+        return accounts.stream()
+                .filter(account -> account.getIban().equals(iban))
+                .findFirst();
     }
 
     @Override
