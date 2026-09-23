@@ -40,6 +40,8 @@ public class AccountDAOImpl implements IAccountDAO{
 
     @Override
     public List<Account> findAll() {
+//        return new ArrayList<>(accounts);           // Fresh Copy - modifiable
+//        return List.copyOf(accounts);                // Fresh copy - immutable
         return Collections.unmodifiableList(accounts);
     }
 
