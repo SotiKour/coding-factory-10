@@ -12,7 +12,6 @@ public class Account {
 
 
     public Account() {
-
     }
 
     public Account(String iban, BigDecimal balance) {
