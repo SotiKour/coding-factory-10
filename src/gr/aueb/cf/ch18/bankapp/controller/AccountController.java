@@ -29,16 +29,26 @@ public class AccountController {
          return readOnlyDTO;
     }
 
+    public void deposit(String iban, BigDecimal amount) {
+
+        //Dummy Data
+        if (iban.equals("GR12345")) {
+            throw new IllegalArgumentException("Invalid IBAN");
+        }
+
+        //Service Call
+        //accountService.deposit(iban, amount);
+    }
+
     public List<AccountReadOnlyDTO> getAllAccounts() {
 
         //Dummy Data
         return List.of(new AccountReadOnlyDTO("GR12345", BigDecimal.valueOf(1000.00)),
-                        new AccountReadOnlyDTO("GR12346",BigDecimal.valueOf(2000)),
-                        new AccountReadOnlyDTO("GR12347",BigDecimal.valueOf(3000)),
-                        new AccountReadOnlyDTO("GR12348",BigDecimal.valueOf(4000)));
+                new AccountReadOnlyDTO("GR12346", BigDecimal.valueOf(2000)),
+                new AccountReadOnlyDTO("GR12347", BigDecimal.valueOf(3000)),
+                new AccountReadOnlyDTO("GR12348", BigDecimal.valueOf(4000)));
 
         //Service Call
         //return accountService.getAllAccounts();
-
     }
 }

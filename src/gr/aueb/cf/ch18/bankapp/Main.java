@@ -16,8 +16,7 @@ public class Main {
     public static void main(String[] args) {
         String option;
         String iban;
-        BigDecimal balance;                                 // BigDecimal αντί για double σε χρήματα λόγω ακρίβειας.
-
+        BigDecimal balance;                                     // BigDecimal αντί για double σε χρήματα λόγω ακρίβειας.
 
         while (true) {
             printMenu();
@@ -49,6 +48,18 @@ public class Main {
                             readOnlyDTOS.forEach(System.out::println);
                             System.out.println();
                         }
+                    }
+                    case "3" -> {
+                        System.out.print("Παρακαλώ εισάγεται το IBAN: ");
+                        iban = scanner.nextLine().trim();
+                        System.out.print("Παρακαλώ εισάγεται το ποσό κατάθεσης: ");
+                        BigDecimal depositAmount = new BigDecimal(scanner.nextLine().trim());
+
+                        accountController.deposit(iban, depositAmount);
+                        System.out.println("\n Επιτυχής κατάθεση!");
+                        System.out.println("Το ποσό κατάθεσης: " + depositAmount + ", Νέο υπόλοιπο: "); // + accountController.getBalance());
+
+
                     }
 
 
