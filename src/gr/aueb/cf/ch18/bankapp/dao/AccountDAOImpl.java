@@ -3,6 +3,7 @@ package gr.aueb.cf.ch18.bankapp.dao;
 import gr.aueb.cf.ch18.bankapp.model.Account;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,16 +40,17 @@ public class AccountDAOImpl implements IAccountDAO{
 
     @Override
     public List<Account> findAll() {
-        return List.of();
+        return Collections.unmodifiableList(accounts);
     }
 
     @Override
     public long count() {
-        return 0;
+        return accounts.size();
     }
 
     @Override
     public boolean isAccountExists(String iban) {
-        return false;
+        return  accounts.stream()
+                .anyMatch(account -> account.getIban().equals(iban));
     }
 }
