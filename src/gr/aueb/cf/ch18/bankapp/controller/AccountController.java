@@ -11,20 +11,34 @@ import java.util.List;
 public class AccountController {
 
     // dummy
-    private final List<Account> accounts = new ArrayList<>();
+//    private final List<Account> accounts = new ArrayList<>();
 
     public AccountReadOnlyDTO createNewAccount(String iban, BigDecimal balance) {
         // Data Binding
-        AccountInsertDTO insertDTO = new AccountInsertDTO(iban, balance);
+//        AccountInsertDTO insertDTO = new AccountInsertDTO(iban, balance);
         AccountReadOnlyDTO readOnlyDTO;
 
-        //Validation
+        //1. Validation
 
 
-        //Dummy
-       accounts.add(new Account(iban, balance));
+        //2. Service call
+        // readOnlyDTO = new accountService.createAccount(insertDTO);
 
-        readOnlyDTO = new AccountReadOnlyDTO(iban, balance);
-        return readOnlyDTO;
+        // Dummy Data
+         readOnlyDTO = new AccountReadOnlyDTO(iban, balance);
+         return readOnlyDTO;
+    }
+
+    public List<AccountReadOnlyDTO> getAllAccounts() {
+
+        //Dummy Data
+        return List.of(new AccountReadOnlyDTO("GR12345", BigDecimal.valueOf(1000.00)),
+                        new AccountReadOnlyDTO("GR12346",BigDecimal.valueOf(2000)),
+                        new AccountReadOnlyDTO("GR12347",BigDecimal.valueOf(3000)),
+                        new AccountReadOnlyDTO("GR12348",BigDecimal.valueOf(4000)));
+
+        //Service Call
+        //return accountService.getAllAccounts();
+
     }
 }
