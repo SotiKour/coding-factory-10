@@ -56,6 +56,7 @@ public class Main {
                         BigDecimal depositAmount = new BigDecimal(scanner.nextLine().trim());
 
                         accountController.deposit(iban, depositAmount);
+
                         System.out.println("\n Επιτυχής κατάθεση!");
                         System.out.println("Το ποσό κατάθεσης: " + depositAmount + ", Νέο υπόλοιπο: "); // + accountController.getBalance());
                     }
@@ -66,11 +67,25 @@ public class Main {
                         BigDecimal withdrawAmount = new BigDecimal(scanner.nextLine().trim());
 
                         accountController.withdraw(iban, withdrawAmount);
+
                         System.out.println("\n Επιτυχής ανάληψη!");
                         System.out.println("Το ποσό ανάληψης: " + withdrawAmount + ", Νέο υπόλοιπο: "); // + accountController.getBalance());
-
-
                     }
+                    case "5" -> {
+                        System.out.print("Παρακαλώ εισάγεται το IBAN: ");
+                        iban = scanner.nextLine().trim();
+
+                        balance = accountController.getBalance(iban);
+
+                        System.out.println("\nΤο υπόλοιπο του λογαριασμού σας είναι : " + balance);
+                    }
+
+                    case "Q", "q" -> {
+                        System.out.println("\nΈξοδος");
+                        scanner.close();
+                        return;
+                    }
+
                     default -> {
                         System.out.println("\nΜη έγκυρη Επιλογή");
                     }

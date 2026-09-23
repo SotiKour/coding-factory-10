@@ -56,6 +56,18 @@ public class AccountController {
 
     }
 
+    public BigDecimal getBalance(String iban) {
+        //Dummy Data
+        if (iban.equals("GR12345")) {
+            throw new IllegalArgumentException("Account with IBAN" + iban + " not exist");
+        }
+
+        return new BigDecimal(1000);
+
+        //Service Call
+        //accountService.getBalance(iban);
+    }
+
     public List<AccountReadOnlyDTO> getAllAccounts() {
 
         //Dummy Data
