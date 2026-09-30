@@ -15,6 +15,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 public class AccountServiceImpl implements  IAccountService{
     private final IAccountDAO accountDAO;
 
@@ -73,22 +75,43 @@ public class AccountServiceImpl implements  IAccountService{
             accountDAO.saveOrUpdate(account);
             //audit trail: who, when, what, initial balance, resulting balance
         } catch (InsufficientBalanceException e) {
-            System.err.printf("%s. The amount %f is greater than the balance of the IBAN %s\n",
-                    LocalDateTime.now(), withdrawDTO.amount(), withdrawDTO.iban());
+            System.err.printf(
+                    "%s. The amount %f is greater than the balance of the IBAN %s\n",
+                    LocalDateTime.now(),
+                    withdrawDTO.amount(),
+                    withdrawDTO.iban()
+            );
             throw e;
         } catch (AccountNotFoundException e) {
-            System.err.printf("%s. Account with IBAN: %s not found\n", LocalDateTime.now(), withdrawDTO.iban());
+            System.err.printf(
+                    "%s. Account with IBAN: %s not found\n",
+                    LocalDateTime.now(),
+                    withdrawDTO.iban()
+            );
             throw e;
         }
     }
 
     @Override
     public BigDecimal getBalance(String iban) throws AccountNotFoundException {
-        return null;
+        try {
+            Account account = accountDAO.findByIban(iban).
+                    orElseThrow(() ->  new AccountNotFoundException("Account not found!"));
+            return account.getBalance();
+        } catch (AccountNotFoundException e) {
+            System.err.printf(
+                    "%s. Account with IBAN: %s not found\n",
+                    LocalDateTime.now(),
+                    iban
+            );
+            throw e;
+        }
     }
 
     @Override
     public List<AccountReadOnlyDTO> getAllAccounts() {
-        return List.of();
+        return accountDAO.findAll().stream()
+                .map(Mapper::mapToReadOnlyDTO)
+                .toList();
     }
 }
