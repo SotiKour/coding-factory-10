@@ -26,6 +26,5 @@ public class Validator {
             errors.put("balance", "Το υπόλοιπο δεν μπορεί να είναι κενό ή αρνητικό!");
         }
         return errors;
-
     }
 }
