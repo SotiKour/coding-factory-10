@@ -1,6 +1,8 @@
 package gr.aueb.cf.ch18.bankapp.validation;
 
+import gr.aueb.cf.ch18.bankapp.dto.AccountDepositDTO;
 import gr.aueb.cf.ch18.bankapp.dto.AccountInsertDTO;
+import gr.aueb.cf.ch18.bankapp.dto.AccountWithdrawDTO;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -27,4 +29,32 @@ public class Validator {
         }
         return errors;
     }
+
+    public static Map<String, String> validateDepositDTO(AccountDepositDTO depositDTO) {
+        Map<String, String> errors = new HashMap<>();
+
+        if (depositDTO.iban() == null || !depositDTO.iban().trim().matches("GR\\d{5,10}")) {
+            errors.put("iban", "Το IBAN πρέπει να ξεκινάει με GR και να ακολουθείται από 5 έως 10 ψηφία!");
+
+        }
+
+        if (depositDTO.amount() == null ||  depositDTO.amount().compareTo(BigDecimal.ZERO) < 0) {
+            errors.put("amount", "Το ποσό κατάθεσης δεν μπορεί να είναι κενό ή αρνητικό!");
+        }
+        return errors;
+    }
+
+    public static Map<String, String> validateWithdrawDTO(AccountWithdrawDTO withdrawDTO) {
+        Map<String, String> errors = new HashMap<>();
+
+        if (withdrawDTO.iban() == null || !withdrawDTO.iban().trim().matches("GR\\d{5,10}")) {
+            errors.put("iban", "Το IBAN πρέπει να ξεκινάει με GR και να ακολουθείται από 5 έως 10 ψηφία!");
+
+        }
+
+        return errors;
+    }
+
+    //TODO: Check if balance is not sufficient for withdrawal
+
 }
