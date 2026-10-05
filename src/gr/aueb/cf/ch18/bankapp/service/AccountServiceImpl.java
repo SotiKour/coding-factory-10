@@ -26,13 +26,23 @@ public class AccountServiceImpl implements  IAccountService{
 
 
     @Override
-    public AccountReadOnlyDTO createNewAccount(AccountInsertDTO accountInsertDTO) {
-        //TODO: Validation
-        Account accountToReturn;
+    public AccountReadOnlyDTO createNewAccount(AccountInsertDTO accountInsertDTO) throws  NegativeAmountException{
+        try {
+            if (accountInsertDTO.balance().compareTo(BigDecimal.ZERO) < 0) {
+                throw new NegativeAmountException("The initial balance " + accountInsertDTO.balance() +
+                        " must not be negative.");
+            }
 
-        Account account = Mapper.mapToModelEntity(accountInsertDTO);
-        accountToReturn = accountDAO.saveOrUpdate(account);
-        return Mapper.mapToReadOnlyDTO( accountToReturn);
+            Account accountToReturn;
+            Account account = Mapper.mapToModelEntity(accountInsertDTO);
+            accountToReturn = accountDAO.saveOrUpdate(account);
+            return Mapper.mapToReadOnlyDTO(accountToReturn);
+        } catch (NegativeAmountException e){
+            System.err.printf("%s. The initial balance %f is Negative\n",
+                    LocalDateTime.now(),
+                    accountInsertDTO.balance());
+            throw e;
+        }
     }
 
     @Override
