@@ -55,6 +55,12 @@ public class Validator {
         return errors;
     }
 
-    //TODO: Check if balance is not sufficient for withdrawal
+    public static Map<String, String> validateWithdrawBalance(AccountWithdrawDTO withdrawDTO, BigDecimal balance) {
+        Map<String, String> errors = new HashMap<>();
 
+        if (withdrawDTO.amount() == null || withdrawDTO.amount().compareTo(balance) > 0) {
+             errors.put("amount", "Το υπόλοιπο δεν επαρκεί!");
+        }
+        return errors;
+    }
 }
