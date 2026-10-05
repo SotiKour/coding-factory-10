@@ -1,6 +1,9 @@
 package gr.aueb.cf.ch18.bankapp.controller;
 
+import gr.aueb.cf.ch18.bankapp.core.exceptions.AccountNotFoundException;
+import gr.aueb.cf.ch18.bankapp.core.exceptions.NegativeAmountException;
 import gr.aueb.cf.ch18.bankapp.core.exceptions.ValidationException;
+import gr.aueb.cf.ch18.bankapp.dto.AccountDepositDTO;
 import gr.aueb.cf.ch18.bankapp.dto.AccountInsertDTO;
 import gr.aueb.cf.ch18.bankapp.dto.AccountReadOnlyDTO;
 import gr.aueb.cf.ch18.bankapp.model.Account;
@@ -20,19 +23,19 @@ public class AccountController {
     }
 
     public AccountReadOnlyDTO createNewAccount(String iban, BigDecimal balance)
-            throws ValidationException{
+            throws NegativeAmountException, ValidationException{
 
         // Data Binding
         AccountInsertDTO insertDTO = new AccountInsertDTO(iban, balance);
         AccountReadOnlyDTO readOnlyDTO;
 
-        // 1. Validation
+        // Validation
         Map<String, String> errors = Validator.validateInsertDTO(insertDTO);
         if (!errors.isEmpty()) {
             throw new ValidationException(errors.toString());
         }
 
-        // 2. Service call
+        // Service call
         readOnlyDTO = accountService.createNewAccount(insertDTO);
 
         // Dummy Data
@@ -40,17 +43,26 @@ public class AccountController {
          return readOnlyDTO;
     }
 
-    public void deposit(String iban, BigDecimal amount) {
+    public void deposit(String iban, BigDecimal amount)
+            throws AccountNotFoundException, ValidationException, NegativeAmountException {
 
-        //1. Validation
+        // Data Binding
+        AccountDepositDTO depositDTO = new AccountDepositDTO(iban, amount);
 
-        //Dummy Data
-        if (iban.equals("GR12345")) {
-            throw new IllegalArgumentException("ο Λογαριασμός με IBAN: " + iban + " δεν υπάρχει!");
+        // Validation
+        Map<String, String> errors = Validator.validateDepositDTO(depositDTO);
+        if (!errors.isEmpty()) {
+            throw new ValidationException(errors.toString());
         }
 
         //Service Call
-        //accountService.deposit(iban, amount);
+        accountService.deposit(depositDTO);
+
+
+        //Dummy Data
+//        if (iban.equals("GR12345")) {
+//            throw new IllegalArgumentException("ο Λογαριασμός με IBAN: " + iban + " δεν υπάρχει!");
+//        }
     }
 
     public void withdraw(String iban, BigDecimal amount) {
