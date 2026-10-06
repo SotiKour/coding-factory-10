@@ -1,7 +1,15 @@
 package gr.aueb.cf.ch18.bankapp;
 
 import gr.aueb.cf.ch18.bankapp.controller.AccountController;
+import gr.aueb.cf.ch18.bankapp.core.exceptions.AccountNotFoundException;
+import gr.aueb.cf.ch18.bankapp.core.exceptions.InsufficientBalanceException;
+import gr.aueb.cf.ch18.bankapp.core.exceptions.NegativeAmountException;
+import gr.aueb.cf.ch18.bankapp.core.exceptions.ValidationException;
+import gr.aueb.cf.ch18.bankapp.dao.AccountDAOImpl;
+import gr.aueb.cf.ch18.bankapp.dao.IAccountDAO;
 import gr.aueb.cf.ch18.bankapp.dto.AccountReadOnlyDTO;
+import gr.aueb.cf.ch18.bankapp.service.AccountServiceImpl;
+import gr.aueb.cf.ch18.bankapp.service.IAccountService;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -9,18 +17,20 @@ import java.util.Scanner;
 
 public class Main {
 
-    private final static AccountController accountController = new AccountController();
-    private final static Scanner scanner = new Scanner(System.in);
+    private final static IAccountDAO accountDAO = new AccountDAOImpl();
+    private final static IAccountService accountService = new AccountServiceImpl(accountDAO);
+    private final static AccountController accountController = new AccountController(accountService);
 
+    private final static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         String option;
         String iban;
-        BigDecimal balance;                                     // BigDecimal αντί για double σε χρήματα λόγω ακρίβειας.
+        BigDecimal balance;                                     // BigDecimal αντί για double σε χρήματα λόγω ακρίβειας!
 
         while (true) {
             printMenu();
-            option = scanner.nextLine().trim();                   // Με τηv trim δεν παίρνουμε κενά στην αρχή ή στο τέλος!
+            option = scanner.nextLine().trim();                 // Με τηv trim δεν παίρνουμε κενά στην αρχή ή στο τέλος!
 
             try {
                 switch (option) {
@@ -30,8 +40,8 @@ public class Main {
                         System.out.print("Παρακαλώ εισάγεται το αρχικό υπόλοιπο: ");
                         balance = new BigDecimal(scanner.nextLine().trim());
 
+                        // Client calls controller
                         AccountReadOnlyDTO readOnlyDTO = accountController.createNewAccount(iban, balance);
-
                         System.out.println("\n Ο λογαριασμός δημιουργήθηκε ή ανανεώθηκε επιτυχώς");
                         System.out.println("ΙΒΑΝ: " + readOnlyDTO.iban() + ", Υπόλοιπο: " + readOnlyDTO.balance());
                     }
@@ -58,7 +68,8 @@ public class Main {
                         accountController.deposit(iban, depositAmount);
 
                         System.out.println("\n Επιτυχής κατάθεση!");
-                        System.out.println("Το ποσό κατάθεσης: " + depositAmount + ", Νέο υπόλοιπο: "); // + accountController.getBalance());
+                        System.out.println("Το ποσό κατάθεσης: " + depositAmount + ", Νέο υπόλοιπο: " +
+                                accountController.getBalance(iban)); //
                     }
                     case "4" -> {
                         System.out.print("Παρακαλώ εισάγεται το IBAN: ");
@@ -69,7 +80,8 @@ public class Main {
                         accountController.withdraw(iban, withdrawAmount);
 
                         System.out.println("\n Επιτυχής ανάληψη!");
-                        System.out.println("Το ποσό ανάληψης: " + withdrawAmount + ", Νέο υπόλοιπο: "); // + accountController.getBalance());
+                        System.out.println("Το ποσό ανάληψης: " + withdrawAmount + ", Νέο υπόλοιπο: " +
+                                accountController.getBalance(iban));
                     }
                     case "5" -> {
                         System.out.print("Παρακαλώ εισάγεται το IBAN: ");
@@ -90,8 +102,16 @@ public class Main {
                         System.out.println("\nΜη έγκυρη Επιλογή");
                     }
                 }
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
+            } catch (AccountNotFoundException e) {
+                System.out.println("\nΟ λογαριασμός δεν βρέθηκε!");   // Localization
+            } catch (NumberFormatException e) {
+                System.out.println("\nΜη έγκυρη μορφή αριθμού!");
+            } catch (ValidationException e) {
+                System.out.println("\nΛάθος στην επαλήθευση!" +  e.getMessage());
+            } catch (InsufficientBalanceException e) {
+                System.out.println("\nΑνεπαρκές υπόλοιπο!");
+            } catch (NegativeAmountException e) {
+                System.out.println("\nΤο ποσό δεν μπορεί να είναι αρνητικό!");
             }
         }
     }
