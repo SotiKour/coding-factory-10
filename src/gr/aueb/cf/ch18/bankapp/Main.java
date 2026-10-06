@@ -130,7 +130,4 @@ public class Main {
         System.out.println("[Qq]. Έξοδος");
         System.out.print("\n Εισάγετε μία επιλογή: ");
     }
-
-
-
 }
