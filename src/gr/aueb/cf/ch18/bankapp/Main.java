@@ -27,7 +27,7 @@ public class Main {
         String option;
         String iban;
         BigDecimal balance;                                     // BigDecimal αντί για double σε χρήματα λόγω ακρίβειας!
-        System.out.println("hallo");
+        System.out.println("hallo1");
         while (true) {
             printMenu();
             option = scanner.nextLine().trim();                 // Με τηv trim δεν παίρνουμε κενά στην αρχή ή στο τέλος!
