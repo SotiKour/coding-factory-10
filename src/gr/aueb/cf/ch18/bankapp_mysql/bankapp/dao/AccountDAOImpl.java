@@ -65,7 +65,16 @@ public class AccountDAOImpl implements IAccountDAO{
 
     @Override
     public void remove(String iban) {
+        String sql = "DELETE FROM accounts WHERE iban = ?";
 
+        try (Connection conn = DBHelper.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, iban);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error deleting account" + e.getMessage());
+        }
     }
 
     @Override
@@ -93,7 +102,6 @@ public class AccountDAOImpl implements IAccountDAO{
             pstmt.setString(1, iban);
             ResultSet rs = pstmt.executeQuery();
             return rs.next();
-
         } catch (SQLException e) {
             throw new RuntimeException("Error checking account existence" + e.getMessage());
         }
