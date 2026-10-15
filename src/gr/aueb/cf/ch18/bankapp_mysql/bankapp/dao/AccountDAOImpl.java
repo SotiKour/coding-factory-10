@@ -11,9 +11,14 @@ import java.util.List;
 import java.util.Optional;
 
 public class AccountDAOImpl implements IAccountDAO{
+
     @Override
     public Account saveOrUpdate(Account account) {
-        return null;
+        if (isAccountExists(account.getIban())) {
+            return update(account);
+        } else {
+            return insert(account);
+        }
     }
 
     public Account insert(Account account) {
@@ -88,6 +93,7 @@ public class AccountDAOImpl implements IAccountDAO{
             pstmt.setString(1, iban);
             ResultSet rs = pstmt.executeQuery();
             return rs.next();
+
         } catch (SQLException e) {
             throw new RuntimeException("Error checking account existence" + e.getMessage());
         }
