@@ -1,6 +1,11 @@
+.env
+
 ### IntelliJ IDEA ###
 out/
-CodingFactory10.iml
+!**/src/main/**/out/
+!**/src/test/**/out/
+.kotlin
+
 
 ### Mac OS ###
 .DS_Store
