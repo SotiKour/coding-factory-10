@@ -87,6 +87,7 @@ public class AccountServiceImpl implements IAccountService {
                         + account.getIban() + " is greater than the balance");
             }
 
+            //TODO: check for negative amount withdraw
             account.setBalance(account.getBalance().subtract(withdrawDTO.amount()));
             accountDAO.saveOrUpdate(account);
             //audit trail: who, when, what, initial balance, resulting balance
