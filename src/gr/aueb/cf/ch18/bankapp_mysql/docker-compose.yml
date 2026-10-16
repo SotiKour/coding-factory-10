@@ -17,5 +17,6 @@ services:
       timeout: 5s
       retries: 5
     restart: unless-stopped
+
 volumes:
   mysql-data:       # Λέμε στον docker να ορίσει στον host έναν persistent volume
