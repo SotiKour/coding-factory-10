@@ -3,10 +3,15 @@ package gr.aueb.cf.ch19;
 public class RegEx {
 
     public static void main(String[] args) {
-        String s = "Hi";
+        String s = "GR G";
 
         System.out.println(isHello(s));
         System.out.println(isHelloOrHi(s));
+        System.out.println(isHhello(s));
+        System.out.println(startsWithUpperCase(s));
+        System.out.println(startsWithLetter(s));
+        System.out.println(twoWordsSpByOneSpace(s));
+        System.out.println(reverse(s));
     }
 
     public static boolean isHello(String s) {
@@ -30,4 +35,33 @@ public class RegEx {
         return s.matches("[A-Za-z0-9_]coding");
     }
 
+    // Μέταχαρακτήρες
+    public static boolean anyCharAndDigit(String s) {
+        return s.matches(".\\d");           //".[0-9]"
+    }
+
+    public static boolean startsWithDotAndDigit(String s) {
+        return s.matches("\\.\\d");         // .2
+    }
+
+    //02/04/2026 - ποσοδείκτες
+    public static boolean isDate(String s) {
+        return s.matches("\\d{2}/\\d{2}/\\d{4}");
+    }
+
+    public static boolean anyCharOneOrMore(String s) {
+        return s.matches(".+");
+    }
+
+    public static boolean anyCharZeroOrMore(String s) {
+        return s.matches(".*");
+    }
+
+    public static boolean twoWordsSpByOneSpace(String s) {
+        return s.matches(".+\\s.+");
+    }
+
+    public static String reverse(String s) {
+        return s.replaceAll("(.+)\\s(.+)", "$2 $1");
+    }
 }
